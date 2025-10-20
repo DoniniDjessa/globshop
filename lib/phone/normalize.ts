@@ -6,12 +6,21 @@ export function normalizePhone(raw: string): string {
   if (!digits) return "";
 
   if (hadPlus) {
+    // Fix common issue: +225 followed by a local-leading 0 → strip the 0
+    if (digits.startsWith("2250")) {
+      return "+225" + digits.slice(4);
+    }
     return "+" + digits;
   }
 
   // Handle international format starting with 00
   if (digits.startsWith("00")) {
-    return "+" + digits.slice(2);
+    const intl = digits.slice(2);
+    // Also normalize +2250XXXXXXXX → +225XXXXXXXX
+    if (intl.startsWith("2250")) {
+      return "+225" + intl.slice(4);
+    }
+    return "+" + intl;
   }
 
   // Local number: assume Cote d'Ivoire default +225

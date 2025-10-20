@@ -22,7 +22,7 @@ export default function LogoutButton() {
     <button
       onClick={handleLogout}
       disabled={loading || isPending}
-      className="inline-flex items-center justify-center h-9 px-4 rounded-md bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-black dark:hover:bg-white/90 disabled:opacity-60"
+      className="inline-flex items-center justify-center h-9 px-4 rounded-md bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-black dark:hover:bg-white/90 disabled:opacity-60 text-sm"
     >
       {loading || isPending ? (
         <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/60 border-t-transparent" />

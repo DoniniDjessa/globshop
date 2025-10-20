@@ -2,6 +2,7 @@
 
 import { useState, useTransition, FormEvent, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
@@ -58,22 +59,23 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-[100svh] flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-orange-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-black">
-      <div className="w-full max-w-sm rounded-2xl border border-black/10 dark:border-white/10 p-6 shadow-lg bg-white/90 dark:bg-zinc-900/80 backdrop-blur">
-        <h1 className="text-xl font-semibold mb-1" style={{ fontFamily: "var(--font-fira-condensed)" }}>Connexion</h1>
-        <p className="text-sm text-zinc-500 mb-6">Utilisez votre e‑mail ou téléphone et votre mot de passe</p>
-        {error ? (
-          <div className="mb-4 text-sm text-red-600">{error}</div>
-        ) : null}
-        <form onSubmit={onSubmit} className="space-y-4">
+    <div className="min-h-[100svh] grid grid-cols-1 md:grid-cols-2 bg-gradient-to-br from-orange-50 via-white to-orange-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-black">
+      <div className="w-full flex items-center justify-center p-6">
+        <div className="w-full max-w-sm rounded-2xl p-6">
+          <h1 className="text-xl font-semibold mb-1" style={{ fontFamily: "var(--font-fira-condensed)" }}>Connexion</h1>
+          <p className="text-sm text-zinc-500 mb-6">Utilisez votre e‑mail ou téléphone et votre mot de passe</p>
+          {error ? (
+            <div className="mb-4 text-sm text-red-600">{error}</div>
+          ) : null}
+          <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium">E‑mail ou téléphone</label>
             <input
               type="text"
               value={identifier}
               onChange={(e) => handleIdentifierChange(e.target.value)}
-              className="w-full rounded-md border border-black/10 dark:border-white/10 px-3 py-2 bg-transparent outline-none focus:ring-2 focus:ring-orange-200 dark:focus:ring-orange-400/30"
-              placeholder="vous@exemple.com ou +237..."
+              className="w-full rounded-md border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5 outline-none focus:ring-2 focus:ring-orange-200 dark:focus:ring-orange-400/30 text-sm placeholder:text-xs"
+              placeholder="vous@exemple.com ou +225..."
               required
               autoComplete="username"
             />
@@ -85,7 +87,7 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-black/10 dark:border-white/10 px-3 py-2 pr-10 bg-transparent outline-none focus:ring-2 focus:ring-orange-200 dark:focus:ring-orange-400/30"
+                className="w-full rounded-md border border-black/10 dark:border-white/10 px-3 py-2 pr-10 bg-white/70 dark:bg-white/5 outline-none focus:ring-2 focus:ring-orange-200 dark:focus:ring-orange-400/30 placeholder:text-xs"
                 placeholder="••••••••"
                 required
                 autoComplete="current-password"
@@ -103,7 +105,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full h-10 rounded-md bg-orange-500 text-white hover:bg-orange-600 transition disabled:opacity-60 shadow-sm flex items-center justify-center gap-2"
+            className="w-full h-10 rounded-md bg-orange-500 text-white hover:bg-orange-600 transition disabled:opacity-60 shadow-sm flex items-center justify-center gap-2 text-sm"
           >
             {isPending ? (
               <>
@@ -114,7 +116,19 @@ export default function LoginPage() {
               "Se connecter"
             )}
           </button>
-        </form>
+          </form>
+          {/* Registration is handled by l'administrateur principal désormais */}
+        </div>
+      </div>
+      <div className="hidden md:block relative">
+        <Image
+          src="https://images.unsplash.com/photo-1519748771451-a94c596fad67?q=80&w=1600&auto=format&fit=crop"
+          alt="Salon de beauté"
+          fill
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="object-cover"
+          priority
+        />
       </div>
     </div>
   );

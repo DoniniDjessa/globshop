@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fira_Sans_Condensed, Poppins } from "next/font/google";
 import MotionProvider from "@/components/providers/motion-provider";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const firaCondensed = Fira_Sans_Condensed({
@@ -30,7 +31,10 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${poppins.variable} ${firaCondensed.variable} antialiased`}>
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          {children}
+          <Toaster position="top-right" richColors closeButton />
+        </MotionProvider>
       </body>
     </html>
   );

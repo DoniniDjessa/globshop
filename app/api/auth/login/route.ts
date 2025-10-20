@@ -30,6 +30,7 @@ export async function POST(request: Request) {
 
     if (!looksLikeEmail) {
       const normalized = normalizePhone(identifier);
+      // First try to find a real email saved for this phone
       const { data: profileByPhone, error: phoneErr } = await supabase
         .from("dd_users")
         .select("email")
@@ -38,9 +39,12 @@ export async function POST(request: Request) {
       if (phoneErr) {
         return NextResponse.json({ error: "Auth error" }, { status: 500 });
       }
-      emailForAuth = profileByPhone?.email ?? null;
-      if (!emailForAuth) {
-        return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+      if (profileByPhone?.email) {
+        emailForAuth = profileByPhone.email;
+      } else {
+        // Fallback to alias email pattern stored in Auth when user was created without a real email
+        const digits = normalized.replace(/\D+/g, "");
+        emailForAuth = `${digits}@alias.local`;
       }
     }
 
